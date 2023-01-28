@@ -6,13 +6,13 @@ import { Body, Controller, Post } from '@nestjs/common';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  // @Post('/signup')
-  // async signUp(@Body() authCredentialsDto: AuthCredentialsDto) {
-  //   return await this.authService.signUp(authCredentialsDto);
-  // }
+  @Post('/signup')
+  async signUp(@Body() authCredentialsDto: AuthCredentialsDto) {
+    return await this.authService.signUp(authCredentialsDto);
+  }
 
-  // @Post('/signin')
-  // async signIn(@Body() authCredentialsDto: AuthCredentialsDto) {
-  //   return await this.authService.signIn(authCredentialsDto);
-  // }
+  @Post('/signin')
+  async signIn(@Body() authCredentialsDto: AuthCredentialsDto) {
+    return await this.authService.signIn(authCredentialsDto);
+  }
 }
