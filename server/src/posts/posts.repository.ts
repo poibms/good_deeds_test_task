@@ -54,4 +54,16 @@ export class PostsRepository {
   async getUserPosts(userId: Schema.Types.ObjectId): Promise<Posts[]> {
     return await this.postsModel.find({ ownerId: userId });
   }
+
+  async deletePost(
+    postId: any,
+    userId: Schema.Types.ObjectId,
+  ): Promise<{ message: string }> {
+    try {
+      await this.postsModel.findOneAndDelete({ _id: postId, ownerId: userId });
+      return { message: 'successfully deleted' };
+    } catch (e) {
+      throw new BadRequestException('There is no post with such id');
+    }
+  }
 }

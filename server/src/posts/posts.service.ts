@@ -26,4 +26,11 @@ export class PostsService {
   async getUserPost(userId: Schema.Types.ObjectId): Promise<Posts[]> {
     return await this.postsRepository.getUserPosts(userId);
   }
+
+  async deletePost(
+    postId: any,
+    userId: Schema.Types.ObjectId,
+  ): Promise<{ message: string }> {
+    return await this.postsRepository.deletePost(postId, userId);
+  }
 }

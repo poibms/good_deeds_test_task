@@ -2,7 +2,16 @@ import { User } from 'src/user/user.schema';
 import { PostsCredsDto } from './dto/posts-credentials.dto';
 import { PostsService } from './posts.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Body, Controller, Post, UseGuards, Put, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  Put,
+  Get,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { Posts } from './posts.schema';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { PostsUpdateDto } from './dto/posts-update.dto';
@@ -31,5 +40,13 @@ export class PostsController {
   @Get('/')
   getUserPosts(@GetUser() user: User): Promise<Posts[]> {
     return this.postsService.getUserPost(user._id);
+  }
+
+  @Delete('/:postsid')
+  deletePost(
+    @Param('postsid') postId: any,
+    @GetUser() user: User,
+  ): Promise<{ message: string }> {
+    return this.postsService.deletePost(postId, user._id);
   }
 }
