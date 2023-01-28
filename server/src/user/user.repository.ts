@@ -1,9 +1,5 @@
 import { AuthCredentialsDto } from './../auth/dto/auth-credentials.dto';
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
