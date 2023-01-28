@@ -1,8 +1,12 @@
 import { UserUpdateDto } from './dto/user-update.dto';
 import { AuthCredentialsDto } from './../auth/dto/auth-credentials.dto';
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
 import { User, UserDocument } from './user.schema';
 
@@ -47,14 +51,38 @@ export class UsersRepository {
     id: Schema.Types.ObjectId,
     userUpdateDto: UserUpdateDto,
   ): Promise<User> {
-    const updatedUser = await this.userModel.findByIdAndUpdate(id, {
+    await this.userModel.findByIdAndUpdate(id, {
       ...userUpdateDto,
     });
+
+    const updatedUser = await this.getUserById(id);
     return updatedUser;
+  }
+
+  async getUserById(id: Schema.Types.ObjectId) {
+    const user = await this.userModel.findById(id);
+
+    if (!user) {
+      throw new BadRequestException(`There is no user with such id: ${id}`);
+    }
+
+    return user;
   }
 
   async deleteUser(id: Schema.Types.ObjectId): Promise<{ message: string }> {
     await this.userModel.findByIdAndDelete(id);
     return { message: 'successfully deleted' };
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.userModel.find();
+  }
+
+  async addFriend(friendId: any, user: User): Promise<User> {
+    // const objId = Schema.Types.ObjectId(friendId);
+    // console.log(mongoose.isValidObjectId(user._id));
+    return await this.userModel.findByIdAndUpdate(user._id, {
+      friends: friendId,
+    });
   }
 }

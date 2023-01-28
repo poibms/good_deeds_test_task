@@ -18,4 +18,12 @@ export class UserService {
   async deleteUser(id: Schema.Types.ObjectId): Promise<{ message: string }> {
     return await this.usersRepository.deleteUser(id);
   }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.usersRepository.getAllUsers();
+  }
+
+  async addFriend(friendId: any, user: User): Promise<any> {
+    return await this.usersRepository.addFriend(friendId, user);
+  }
 }
