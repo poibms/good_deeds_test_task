@@ -34,7 +34,7 @@ export class UsersRepository {
       return newUser.save();
     }
     const newUser = new this.userModel(authCredentialsDto);
-    return newUser.save();
+    return await newUser.save();
   }
 
   async getUserByUsername(username: string): Promise<User> {

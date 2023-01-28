@@ -1,7 +1,7 @@
 import { Prop, Schema as Entity, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema } from 'mongoose';
 
-export type UserDocument = Posts & Document;
+export type PostsDocument = Posts & Document;
 
 @Entity()
 export class Posts {
