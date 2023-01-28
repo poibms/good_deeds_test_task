@@ -19,8 +19,9 @@ export class UserService {
     return await this.usersRepository.deleteUser(id);
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return await this.usersRepository.getAllUsers();
+  async getAllUsers() {
+    const users = await this.usersRepository.getAllUsers();
+    return users;
   }
 
   async addFriend(friendId: any, user: User): Promise<any> {

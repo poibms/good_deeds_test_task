@@ -42,7 +42,7 @@ export class UsersRepository {
     return candidate;
   }
 
-  async countUsers(): Promise<any> {
+  async countUsers(): Promise<number> {
     const count = await this.userModel.count();
     return count;
   }
@@ -59,7 +59,7 @@ export class UsersRepository {
     return updatedUser;
   }
 
-  async getUserById(id: Schema.Types.ObjectId) {
+  async getUserById(id: Schema.Types.ObjectId): Promise<User> {
     const user = await this.userModel.findById(id);
 
     if (!user) {
@@ -75,7 +75,7 @@ export class UsersRepository {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userModel.find();
+    return await this.userModel.find({}, '-password -field');
   }
 
   async addFriend(friendId: any, user: User): Promise<User> {
