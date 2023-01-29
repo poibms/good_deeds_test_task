@@ -1,15 +1,22 @@
 import React, { Suspense } from 'react';
-import { publicRoutes } from '../routes';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { authRoutes, publicRoutes } from '../routes';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Page404 from '../../component/pages/Page404';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from '../../store/users';
 
 const AppRouter: React.FC = () => {
-  // const isLoggedIn = useSelector(getIsLoggedIn());
+  const isLoggedIn = useSelector(getIsLoggedIn());
   return (
    <Suspense fallback={<></>}>
     <Router>
       <Routes>
-        {publicRoutes.map(route =>
+        {isLoggedIn ?
+            authRoutes.map(route =>
+              route.path ? (
+                <Route path={route.path} element={<route.component/>} key={route.path} />
+              ) : null
+        ) : publicRoutes.map(route =>
           route.path ? (
             <Route path={route.path} element={<route.component/>} key={route.path} />
           ) : null

@@ -4,10 +4,10 @@ import { AuthCreds } from '../../../types/types';
 import withPassword from '../../HOC/WithPassword';
 import Button from '../Button/Button';
 import validatorConfig from './validatorConfig';
-// import authService from '../../../services/auth.service';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../InputField/InputField';
-import authService from '../../../services/auth.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthErrors, signUp } from '../../../store/users';
 
 const initialData: AuthCreds = {
   username: '',
@@ -23,11 +23,13 @@ const SignUpForm = () => {
   );
 
   const navigate = useNavigate();
+  const loginError = useSelector(getAuthErrors());
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (validate(data)) {
-      await authService.signUp(data);
+      dispatch(signUp(data, navigate));
       // navigate('/')
       handleResetForm(e);
     }
@@ -38,13 +40,16 @@ const SignUpForm = () => {
   
   
   return (
-    <Form data={data} errors={errors} handleChange={handleInputChange}>
-        <InputField name='username' label='Username' autoFocus />
-        <InputWithPassword name='password' label='Password' type='password' />
-        <Button className=' button button_sign' type='submit' onClick={handleSubmit} disabled={enterError ? true : false}>
-          Зарегистрироваться
-        </Button>
-    </Form>
+    <>
+      <Form data={data} errors={errors} handleChange={handleInputChange}>
+          <InputField name='username' label='Username' autoFocus />
+          <InputWithPassword name='password' label='Password' type='password' />
+          <Button className=' button button_sign' type='submit' onClick={handleSubmit} disabled={enterError ? true : false}>
+            Зарегистрироваться
+          </Button>
+      </Form>
+      {loginError && <p className='form__enter-error'>{loginError}</p>}
+    </>
   )
 }
 

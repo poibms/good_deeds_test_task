@@ -1,12 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getIsLoggedIn } from '../../store/users';
 import Container from '../common/Container/Container';
 import Button from '../ui/Button/Button';
 
 const Page404 = () => {
+  const isLoggedIn = useSelector(getIsLoggedIn());
   const navigate = useNavigate();
   const goHome = () => {
-    navigate('/');
+    if(isLoggedIn) {
+      navigate('/');
+    } else {
+      navigate('/login/signIn')
+    }
   };
 
   return (

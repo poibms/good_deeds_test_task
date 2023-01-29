@@ -1,12 +1,27 @@
-const LocalStorageService = {
+import { UserType } from './../types/types';
+import jwt_decode from 'jwt-decode'
 
-  setToken: (token: string) => {
+
+
+class LocalStorageService {
+
+  setToken = (token: string) => {
     localStorage.setItem('accessToken', token)
-  },
+  }
 
-  removeToken: () => {
+  removeToken = () => {
     localStorage.removeItem('accessToken')
+  }
+
+  getAccessToken = (): string | null => {
+    return localStorage.getItem('accessToken');
+  }
+
+  getUserData = (): UserType => {
+    const token = this.getAccessToken();
+    console.log(jwt_decode(token!));
+    return jwt_decode(token!)
   }
 }
 
-export default LocalStorageService;
+export default new LocalStorageService();

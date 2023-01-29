@@ -1,11 +1,14 @@
 import React from 'react';
+import AppLoader from './component/HOC/AppLoader';
 import AppRouter from './router/AppRouter/AppRouter';
 import './style/style.scss';
 
 function App() {
   return (
    <>
-    <AppRouter/>
+    <AppLoader>
+      <AppRouter/>
+    </AppLoader>
    </>
     
   );
