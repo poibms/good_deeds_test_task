@@ -5,6 +5,7 @@ import { AppThunk, RootState } from "./createStore";
 import authService from '../services/auth.service';
 import { createSlice } from '@reduxjs/toolkit';
 import userService from '../services/user.service';
+import { disconnect } from 'process';
 
 type UserInitialState = {
   entities: Array<UserType>;
@@ -90,11 +91,13 @@ export const updateUserData =
 async dispatch => {
   dispatch(usersRequested());
   try {
-    const updatedUser = await userService.updateUserData(payload);
+    const { accessToken, updatedUser } = await userService.updateUserData(payload);
+    localStorageService.setToken(accessToken)
     dispatch(userUpdated(updatedUser));
 
   } catch (error: any) {
-    dispatch(usersRequestFailed(error.message));
+    const { message } = error.response.data;
+    dispatch(usersRequestFailed(message));
   }
 };
 
@@ -133,6 +136,12 @@ export const logOut = (): AppThunk => async dispatch => {
   localStorageService.removeToken();
   dispatch(userLoggedOut());
 };
+
+export const deleteUser = (): AppThunk => async dispatch => {
+  await userService.deleteAcc();
+  localStorageService.removeToken();
+  dispatch(userLoggedOut());
+}
 
 export const loadUsersList = (): AppThunk => async (dispatch, getState) => {
   dispatch(usersRequested());

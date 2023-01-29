@@ -19,7 +19,6 @@ class LocalStorageService {
 
   getUserData = (): UserType => {
     const token = this.getAccessToken();
-    console.log(jwt_decode(token!));
     return jwt_decode(token!)
   }
 }

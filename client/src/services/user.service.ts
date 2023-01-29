@@ -15,6 +15,11 @@ const userService = {
   updateUserData: async (userUpdateCreds: userUpdateCreds) => {
     const { data } = await $authHost.put('/user/', userUpdateCreds);
     return data;
+  },
+
+  deleteAcc: async () => {
+    const {data} = await $authHost.delete('/user/');
+    console.log( data.message )
   }
 }
 
