@@ -23,8 +23,8 @@ export class PostsService {
     return await this.postsRepository.updatePost(userId, postsUpdateDto);
   }
 
-  async getUserPost(userId: Schema.Types.ObjectId): Promise<Posts[]> {
-    return await this.postsRepository.getUserPosts(userId);
+  async getUserPost(): Promise<Posts[]> {
+    return await this.postsRepository.getUserPosts();
   }
 
   async deletePost(

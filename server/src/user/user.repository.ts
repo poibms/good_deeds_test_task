@@ -75,7 +75,9 @@ export class UsersRepository {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userModel.find({}, '-password -field');
+    return await this.userModel
+      .find({}, '-password -field')
+      .populate('friends', '-password -field');
   }
 
   async addFriend(friendId: Schema.Types.ObjectId, user: User): Promise<User> {

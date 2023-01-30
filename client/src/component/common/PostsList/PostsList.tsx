@@ -6,6 +6,8 @@ import Post from '../Post/Post';
 const PostsList: React.FC<{ownerId: string}> = ({ownerId}) => {
 
   const posts = useSelector(getDeedsByOwnerId(ownerId));
+  console.log(posts)
+  console.log(ownerId)
 
   return (
     <div className='post_index'>

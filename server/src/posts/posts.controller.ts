@@ -38,8 +38,8 @@ export class PostsController {
   }
 
   @Get('/')
-  getUserPosts(@GetUser() user: User): Promise<Posts[]> {
-    return this.postsService.getUserPost(user._id);
+  getUserPosts(): Promise<Posts[]> {
+    return this.postsService.getUserPost();
   }
 
   @Delete('/:postsid')

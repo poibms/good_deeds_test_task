@@ -72,6 +72,7 @@ export const getAllDeeds = (): AppThunk => async dispatch => {
   dispatch(deedsRequested());
   try {
     const data = await deedService.getAllDeeds();
+    console.log(data)
     dispatch(deedsReceived(data));
   } catch (error: any) {
     const { message } = error.response.data;

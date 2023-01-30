@@ -51,8 +51,8 @@ export class PostsRepository {
     }
   }
 
-  async getUserPosts(userId: Schema.Types.ObjectId): Promise<Posts[]> {
-    return await this.postsModel.find({ ownerId: userId });
+  async getUserPosts(): Promise<Posts[]> {
+    return await this.postsModel.find();
   }
 
   async deletePost(

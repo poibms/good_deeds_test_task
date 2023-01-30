@@ -10,6 +10,7 @@ import { Form, useForm } from '../../../hooks/useForm';
 import InputField from '../../ui/InputField/InputField';
 import Button from '../../ui/Button/Button';
 import validatorConfig from './validatorConfig';
+import { getAuthUserInfo } from '../../../store/users';
 
 export type PostProps = {
   post: DeedsType,
@@ -35,6 +36,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
   const deedsError = useSelector(getDeedsErrors());
   const dispatch = useDispatch();
+
+  const crntUsr = useSelector(getAuthUserInfo());
+
+  const isOwner = () => {
+    if (post.ownerId === crntUsr._id) return true;
+    return false;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -62,7 +70,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
             {post.description}
           </div>
 
-          <div className='post_footer'>
+          {
+            isOwner() ? 
+            <div className='post_footer'>
             <div>
               <EditIcon onClick={handleOpen} />
             </div>
@@ -70,6 +80,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
               <DeleteIcon onClick={deleteDeed}/>
             </div>
           </div>
+          :
+          null
+          }
 
       </div>
       

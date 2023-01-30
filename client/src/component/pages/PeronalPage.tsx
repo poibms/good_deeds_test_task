@@ -10,9 +10,10 @@ const PersonalPage = () => {
 
   const { id } = useParams<{ id?: string }>();
   let user =  useSelector(getUserById(id));
+  console.log(id)
 
   const currentUser = useSelector(getAuthUserInfo());
-  
+  console.log(currentUser);
 
   return (
     <Container>
