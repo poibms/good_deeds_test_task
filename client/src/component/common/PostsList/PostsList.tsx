@@ -11,7 +11,7 @@ const PostsList: React.FC<{ownerId: string}> = ({ownerId}) => {
     <div className='post_index'>
       {
         posts?.map((post) => (
-          <Post post={post} _id={''}/>
+          <Post post={post} key={post._id}/>
         ))
       }
     </div>

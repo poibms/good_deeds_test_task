@@ -24,6 +24,12 @@ export type DeedsType = {
 };
 
 export type DeedCreds = {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+}
+
+export type UpdateDeedCreds = {
+  _id: string;
+  title?: string;
+  description?: string;
 }

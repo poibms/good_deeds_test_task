@@ -34,7 +34,9 @@ const PostsWrapper: React.FC<{ownerId: string}> = ({ ownerId }) => {
     if (validate(data)) {
       dispatch(addNewDeed(data));
       handleResetForm(e);
-      handleClose();
+      if (!deedsError) {
+        handleClose();
+      }
     }
   };
 
