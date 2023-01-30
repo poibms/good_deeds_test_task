@@ -1,9 +1,11 @@
 import usersReducer from './users';
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import deedsReducer from './deeds';
 
 const rootReducer = combineReducers({
   users: usersReducer,
+  deeds: deedsReducer,
 });
 
 export function createStore() {

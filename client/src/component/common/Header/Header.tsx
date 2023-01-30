@@ -12,12 +12,12 @@ const Header = () => {
             <h3>Good deeds</h3>
           </div>
           <div className='header-buttons'>
-              <NavLink to='/login/signIn' className='header-buttons-button'>
+              <NavLink to='/' className='header-buttons-button'>
                 <Button className='button'>
                   Личный кабинет
                 </Button>
               </NavLink>
-              <NavLink to='/login/signUp' className='header-buttons-button'>
+              <NavLink to='/friends' className='header-buttons-button'>
                 <Button className='button'>
                   Друзья
                 </Button>

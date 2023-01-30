@@ -14,3 +14,16 @@ export type UserType = {
   friends? : any[]
   [string: string]: any;
 };
+
+export type DeedsType = {
+  _id: string;
+  title?: string;
+  description?: string;
+  ownerId?: string;
+  [string: string]: any;
+};
+
+export type DeedCreds = {
+  title: string;
+  description: string;
+}
