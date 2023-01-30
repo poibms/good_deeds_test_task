@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllDeeds } from '../../store/deeds';
 import { getIsLoggedIn, getUsersLoadingStatus, loadUsersList } from '../../store/users';
 
 const AppLoader = ({ children }: any) => {
@@ -10,6 +11,7 @@ const AppLoader = ({ children }: any) => {
 
   useEffect(() => {
     dispatch(loadUsersList());
+    dispatch(getAllDeeds());
 
   }, [isLoggedIn]);
 

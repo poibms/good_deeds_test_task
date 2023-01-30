@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getAuthUserInfo, getUserById } from '../../store/users';
 import Container from "../common/Container/Container";
-import PostList from '../common/PostsList/PostsList';
+import PostsWrapper from '../common/PostsWrapper/PostsWrapper';
 import UserTemplate from '../common/UserTemplate/UserTemplate';
-import Button from '../ui/Button/Button';
 
 const PersonalPage = () => {
 
@@ -18,11 +17,17 @@ const PersonalPage = () => {
   return (
     <Container>
       { id ? 
-        <UserTemplate user={user!}/>
+        <>
+          <UserTemplate user={user!}/>
+          <PostsWrapper ownerId={user?._id!}/>
+        </>
         :
-        <UserTemplate user={currentUser}/>
+        <>
+          <UserTemplate user={currentUser}/>
+          <PostsWrapper ownerId={currentUser._id!}/>
+        </>
       }
-      <PostList/>
+      
     </Container>
   )
 }

@@ -22,6 +22,10 @@ const deedsSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    addNewDeed: (state, action) => {
+      state.entities.push(action.payload);
+      state.error = null;
+    },
     deedUpdated: (state, action) => {
       const deedIndex = state.entities.findIndex(deed => deed._id === action.payload._id);
       state.entities[deedIndex] = action.payload;
@@ -33,21 +37,17 @@ const { actions, reducer: deedsReducer } = deedsSlice;
 
 const { deedsRequested, deedsReceived, deedsRequestFailed, deedUpdated } = actions;
 
-const addDeedRequested = createAction('deeds/addBookingdeedRequested');
-const addDeedRequestedSuccess = createAction('deeds/addBookingdeedRequestedSuccess');
-const addDeedRequestedFailed = createAction('deeds/addBookingdeedRequestedFailed');
-
 
 export const addNewDeed =
   (payload: DeedCreds): AppThunk =>
   async dispatch => {
-    dispatch(addDeedRequested());
+    dispatch(deedsRequested());
     try {
-      deedService.createDeed(payload);
-      dispatch(addDeedRequestedSuccess());
+      const newDeed = await deedService.createDeed(payload);
+      dispatch(addNewDeed(newDeed));
     } catch (error: any) {
       const { message } = error.response.data;
-      dispatch(addDeedRequestedFailed(message));
+      dispatch(deedsRequestFailed(message));
     }
   };
 
@@ -59,6 +59,12 @@ export const getAllDeeds = (): AppThunk => async dispatch => {
   } catch (error: any) {
     const { message } = error.response.data;
     dispatch(deedsRequestFailed(message));
+  }
+}
+
+export const getDeedsByOwnerId = (id?: string) => (state: RootState) => {
+  if (state.deeds.entities) {
+    return state.deeds.entities.filter((deed: DeedsType) => deed.ownerId === id);
   }
 }
 
