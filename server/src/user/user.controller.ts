@@ -4,6 +4,7 @@ import { Body, Controller, Delete, Get, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from './user.schema';
+import { Schema } from 'mongoose';
 
 @Controller('user')
 @UseGuards(AuthGuard())
@@ -29,7 +30,7 @@ export class UserController {
   }
 
   @Put('/addfriend')
-  addFriend(@Body() friendId: any, @GetUser() user: User) {
-    return this.userService.addFriend(friendId, user);
+  addFriend(@Body() friend: any, @GetUser() user: User) {
+    return this.userService.addFriend(friend.friendId, user);
   }
 }

@@ -33,7 +33,7 @@ export class UserService {
     return users;
   }
 
-  async addFriend(friendId: any, user: User): Promise<any> {
+  async addFriend(friendId: Schema.Types.ObjectId, user: User): Promise<any> {
     return await this.usersRepository.addFriend(friendId, user);
   }
 }

@@ -78,11 +78,27 @@ export class UsersRepository {
     return await this.userModel.find({}, '-password -field');
   }
 
-  async addFriend(friendId: any, user: User): Promise<User> {
-    // const objId = Schema.Types.ObjectId(friendId);
-    // console.log(mongoose.isValidObjectId(user._id));
-    return await this.userModel.findByIdAndUpdate(user._id, {
-      friends: friendId,
-    });
+  async addFriend(friendId: Schema.Types.ObjectId, user: User): Promise<User> {
+    try {
+      const checkUser = await this.getUserById(user._id);
+
+      if (checkUser.friends.find((friend) => friend == friendId)) {
+        throw new BadRequestException('This user is already your friend');
+      }
+
+      const currentUser = await this.userModel.findByIdAndUpdate(
+        { _id: user._id },
+        { $push: { friends: friendId } },
+      );
+
+      const friend = await this.userModel.findByIdAndUpdate(
+        { _id: friendId },
+        { $push: { friends: user._id } },
+      );
+
+      return await this.userModel.findById(user._id);
+    } catch (e) {
+      throw new BadRequestException('This user is already your friend');
+    }
   }
 }

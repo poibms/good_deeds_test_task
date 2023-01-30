@@ -17,11 +17,8 @@ export class User {
   @Prop({ required: true, default: 'USER' })
   role: string;
 
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Posts' })
-  // posts: Posts[];
-
-  @Prop([{ type: String, ref: 'User' }])
-  friends: any;
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User', unique: true }])
+  friends: any[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
