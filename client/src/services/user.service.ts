@@ -9,7 +9,8 @@ const userService = {
     const { data } = await $authHost.get('/user/');
     console.log(data);
     const { username } = localStorageService.getUserData();
-    return data.filter((user: UserType) => user.username !== username);
+    // return data.filter((user: UserType) => user.username !== username);
+    return data;
   },
 
   updateUserData: async (userUpdateCreds: userUpdateCreds) => {
@@ -20,6 +21,11 @@ const userService = {
   deleteAcc: async () => {
     const {data} = await $authHost.delete('/user/');
     console.log( data.message )
+  },
+
+  addFriend: async (id: string) => {
+    const {data} = await $authHost.put('/user/addfriend', {friendId: id});
+    return data
   }
 }
 

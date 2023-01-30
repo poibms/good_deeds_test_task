@@ -61,7 +61,7 @@ const initialState: UserInitialState = localStorageService.getAccessToken()
         },
         userUpdated: (state, action) => {
           // const userIndex = state.entities.findIndex(user => user._id === action.payload._id);
-          state.auth = { ...state.auth, ...action.payload}
+          state.entities = { ...state.entities, ...action.payload}
           // state.entities[userIndex] = action.payload;
         },
         userLoggedOut: state => {
@@ -132,6 +132,18 @@ export const signUp =
     }
   };
 
+export const addNewFriend = (id: string): AppThunk =>
+  async dispatch => {
+    dispatch(usersRequested());
+    try{
+      const data = await userService.addFriend(id);
+      dispatch(userUpdated(data))
+    } catch (error: any) {
+      const { message } = error.response.data;
+      dispatch(usersRequestFailed(message));
+    }
+  }
+
 export const logOut = (): AppThunk => async dispatch => {
   localStorageService.removeToken();
   dispatch(userLoggedOut());
@@ -160,6 +172,8 @@ export const getIsLoggedIn = () => (state: RootState) => state.users.isLoggedIn;
 export const getUsersLoadingStatus = () => (state: RootState) => state.users.isLoading;
 
 export const getAuthUserInfo = () => (state: RootState) => state.users.auth;
+
+export const getAllUsers = () => (state: RootState) => state.users.entities;
 
 export const getUserById = (id?: string) => (state: RootState) => {
   if (state.users.entities) {
