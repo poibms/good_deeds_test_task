@@ -13,7 +13,7 @@ import { PostsModule } from './posts/posts.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URL'),
+        uri: 'mongodb+srv://good_deeds:good_deeds12345678@cluster0.otjxjdy.mongodb.net/?retryWrites=true&w=majority',
         useNewUrlParser: true,
       }),
       inject: [ConfigService],
