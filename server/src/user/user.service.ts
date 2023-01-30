@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { UserUpdateDto } from './dto/user-update.dto';
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './user.repository';
@@ -6,13 +7,21 @@ import { Schema } from 'mongoose';
 
 @Injectable()
 export class UserService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private authService: AuthService,
+  ) {}
 
   async updateUser(
     id: Schema.Types.ObjectId,
     userUpdateDto: UserUpdateDto,
-  ): Promise<User> {
-    return await this.usersRepository.updateUser(id, userUpdateDto);
+  ): Promise<{ accessToken: string; updatedUser: User }> {
+    const updatedUser = await this.usersRepository.updateUser(
+      id,
+      userUpdateDto,
+    );
+    const accessToken = await this.authService.genAccesToken(updatedUser);
+    return { ...accessToken, updatedUser };
   }
 
   async deleteUser(id: Schema.Types.ObjectId): Promise<{ message: string }> {

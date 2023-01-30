@@ -60,7 +60,7 @@ export class UsersRepository {
   }
 
   async getUserById(id: Schema.Types.ObjectId): Promise<User> {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id, '-password -field');
 
     if (!user) {
       throw new BadRequestException(`There is no user with such id: ${id}`);

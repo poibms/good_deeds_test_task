@@ -14,7 +14,7 @@ export class UserController {
   updateUser(
     @Body() userUpdateDto: UserUpdateDto,
     @GetUser() user: User,
-  ): Promise<User> {
+  ): Promise<{ accessToken: string; updatedUser: User }> {
     return this.userService.updateUser(user._id, userUpdateDto);
   }
 

@@ -41,7 +41,7 @@ export class AuthService {
     }
   }
 
-  private async genAccesToken(user: User): Promise<{ accessToken: string }> {
+  async genAccesToken(user: User): Promise<{ accessToken: string }> {
     const payload: JwtPayload = {
       _id: user._id,
       username: user.username,
